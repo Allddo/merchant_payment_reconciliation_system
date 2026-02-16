@@ -1,31 +1,23 @@
 package com.capgemini.mprs.payout;
 
-import com.capgemini.mprs.transaction.Transaction;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
-@Component
+@Service
+@RequiredArgsConstructor
 public class PayoutService {
-    private final PayoutRepository repository;
-    @Autowired
-    public PayoutService(PayoutRepository repository)
-    {
-        this.repository = repository;
+
+    private final PayoutRepository payoutRepository;
+
+    public List<Payout> findAllPayouts(){
+        return payoutRepository.findAll();
     }
 
-    public List<Payout> createPayouts(List<Payout> payouts)
-    {
-        for (Payout payout: payouts){
-            repository.save(payout);
-        }
-        return payouts;
-    }
-
-    public Payout get(Integer id)
-    {
-        return repository.findById(id).orElse(null);
+    public Optional<Payout> findPayoutById(String id){
+        return payoutRepository.findById(id);
     }
 
 }

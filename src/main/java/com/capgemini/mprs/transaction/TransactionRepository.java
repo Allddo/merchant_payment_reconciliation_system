@@ -1,9 +1,10 @@
 package com.capgemini.mprs.transaction;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+public interface TransactionRepository extends JpaRepository<Transaction, String> {
 
-public interface TransactionRepository extends JpaRepository<Transaction,Integer> {
+    boolean existsByTransactionId(String transaction_id);
 
 }
