@@ -1,12 +1,4 @@
 POST http://localhost:8080/api/v1/transactions/bulk
 Content-Type: application/json
 
-{
-  "transaction_id": 3,
-  "amount": 19.99,
-  "status": "AUTHORIZED",
-  "settlement_date": "2/10/2026",
-  "merchant_id": 55
-}
-
-
+{ "client.timeout": 30000 }

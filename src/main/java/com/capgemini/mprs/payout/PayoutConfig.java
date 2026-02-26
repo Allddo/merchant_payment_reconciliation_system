@@ -1,5 +1,4 @@
-package com.capgemini.mprs.transaction;
-
+package com.capgemini.mprs.payout;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -19,61 +18,57 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.FileSystemResource;
 
 @Configuration
 @EnableBatchProcessing
 @RequiredArgsConstructor
-public class TransactionConfig {
+public class PayoutConfig {
     private final JobRepository jobRepository;
-    private final TransactionService transactionService;
-    private final TransactionRepository repository;
+    private final PayoutService payoutService;
+    private final PayoutRepository repository;
+
     @Bean
-    public Step transactionStep(ItemReader<String> transactionReader,
-                                ItemProcessor<String, Transaction> transactionProcessor,
-                                ItemWriter<Transaction> transactionWriter)
-    {
-        return new ChunkOrientedStepBuilder<String,Transaction>("transactionJob",jobRepository,100)
-                .reader(transactionReader)
-                .processor(transactionProcessor)
-                .writer(transactionWriter)
-              //  .taskExecutor(new SimpleAsyncTaskExecutor()) // << enable multithreading
-                .build();
-    }
-    @Bean
-    public Job bulkIngestion(@Qualifier("transactionStep") Step transactionStep,
-                             JobRepository jobRepository) {
-        return new JobBuilder("transactionIngestionJob", jobRepository)
-                .start(transactionStep)
+    public Step payoutStep(ItemReader<String> payoutReader,
+                           ItemProcessor<String, Payout> payoutProcessor,
+                           ItemWriter<Payout> payoutWriter) {
+        return new ChunkOrientedStepBuilder<String, Payout>("payoutJob", jobRepository, 100)
+                .reader(payoutReader)
+                .processor(payoutProcessor)
+                .writer(payoutWriter)
+                //  .taskExecutor(new SimpleAsyncTaskExecutor()) // << enable multithreading
                 .build();
     }
 
+    @Bean
+    public Job bulkPayoutIngestion(@Qualifier("payoutStep") Step payoutStep,
+                                        JobRepository jobRepository) {
+        return new JobBuilder("payoutIngestionJob", jobRepository)
+                .start(payoutStep)
+                .build();
+    }
 
 
     @Bean
     @StepScope
-    public FlatFileItemReader<String> transactionReader(@Value("#{jobParameters['filePath']}") String filePath) {
+    public FlatFileItemReader<String> payoutReader(@Value("#{jobParameters['filePath']}") String filePath) {
         return new FlatFileItemReaderBuilder<String>()
-                .name("TransactionIngestion")
+                .name("PayoutIngestion")
                 .linesToSkip(1)
-                .resource(new FileSystemResource(filePath))
+                .resource(new ClassPathResource("payouts.csv"))
                 .lineMapper((line, lineNumber) -> line)
                 .build();
     }
-
-
-
     @Bean
     @StepScope
-    public ItemProcessor<String,Transaction> transactionProcessor(){
-        return transactionService::ingestTransaction;
+    public ItemProcessor<String,Payout> payoutProcessor(){
+        return payoutService::ingestPayout;
     }
 
     @Bean
     @StepScope
-    public ItemWriter<Transaction> transactionWriter(){
+    public ItemWriter<Payout> payoutWriter(){
         return repository::saveAll;
     }
-
-
 }
+
+

@@ -3,8 +3,6 @@ Content-Type: application/json
 
 [
 {
-  "transaction_id": 1,
-  "payout_amount": 19.99,
-  "payout_date": "2/10/2026"
+ 
 }
 ]

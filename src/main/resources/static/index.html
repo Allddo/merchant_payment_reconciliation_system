@@ -1,10 +1,158 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Hello World</title>
+    <title>MPRS</title>
 </head>
 <body>
-<h1> Hello world</h1>
+
+<h1>MPRS Actions</h1>
+
+<!-- POST actions -->
+<button id="payoutsBtn">Ingest Payouts</button>
+<button id="transactionsBtn">Ingest Transactions</button>
+<button id="reconcileBtn">Run Reconciliation Job</button>
+<p id="status"></p>
+
+<hr/>
+
+<!-- GET viewer -->
+<h1>MPRS Viewer</h1>
+<button id="loadBtn">Show Payouts & Transactions (page 1)</button>
+<div>
+    <button id="prevBtn" disabled>Prev</button>
+    <button id="nextBtn" disabled>Next</button>
+    <span id="info"></span>
+</div>
+
+<div style="display:flex; gap:16px;">
+    <div style="flex:1">
+        <h2>Payouts</h2>
+        <pre id="payoutsOut">(none)</pre>
+    </div>
+
+    <div style="flex:1">
+        <h2>Transactions</h2>
+        <pre id="transactionsOut">(none)</pre>
+    </div>
+</div>
+
+<script>
+    // ---- Single config object to avoid duplicate const names
+    const API = {
+      post: {
+        payouts: '/api/v1/payouts/bulk',
+        transactions: '/api/v1/transactions/bulk',
+        reconcile: '/api/v1/reconciliations/run'
+      },
+      get: {
+        payouts: '/api/v1/payouts',
+        transactions: '/api/v1/transactions'
+      }
+    };
+
+    // ---------- POST helpers ----------
+    async function post(url) {
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: '{}' // adjust if your endpoints expect a body
+      });
+      const text = await res.text();
+      if (!res.ok) throw new Error(text || `HTTP ${res.status}`);
+      return text || 'OK';
+    }
+
+    function setStatus(msg) {
+      document.getElementById('status').innerText = msg;
+    }
+
+    document.getElementById('payoutsBtn').onclick = async () => {
+      try { setStatus(await post(API.post.payouts)); }
+      catch (e) { setStatus('Error: ' + e.message); }
+    };
+
+    document.getElementById('transactionsBtn').onclick = async () => {
+      try { setStatus(await post(API.post.transactions)); }
+      catch (e) { setStatus('Error: ' + e.message); }
+    };
+
+    document.getElementById('reconcileBtn').onclick = async () => {
+      try { setStatus(await post(API.post.reconcile)); }
+      catch (e) { setStatus('Error: ' + e.message); }
+    };
+
+    // ---------- GET viewer with simple paging ----------
+    let page = 0;       // zero-based
+    const size = 50;    // items per page
+
+    async function fetchPage(url, page, size) {
+      // The server may ignore page/size if it returns a List; that's OK.
+      const res = await fetch(`${url}?page=${page}&size=${size}`);
+      if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
+      return res.json();
+    }
+
+    // Works for either Page<T> or plain arrays
+    function extractContent(data) {
+      if (Array.isArray(data)) return data;                // List<T>
+      if (data && Array.isArray(data.content)) return data.content; // Page<T>
+      return []; // fallback
+    }
+    function totalPagesOf(data) {
+      if (Array.isArray(data)) return 1;                   // treating as single page
+      return typeof data.totalPages === 'number' ? data.totalPages : 1;
+    }
+    function totalElementsOf(data) {
+      if (Array.isArray(data)) return data.length;
+      return typeof data.totalElements === 'number' ? data.totalElements : (data.content?.length || 0);
+    }
+
+    function renderJson(obj) {
+      try { return JSON.stringify(obj, null, 2); }
+      catch { return String(obj); }
+    }
+
+    async function load() {
+      const payoutsEl = document.getElementById('payoutsOut');
+      const txEl = document.getElementById('transactionsOut');
+      const infoEl = document.getElementById('info');
+      payoutsEl.textContent = 'Loading...';
+      txEl.textContent = 'Loading...';
+      infoEl.textContent = '';
+
+      try {
+        const [payoutsRaw, txRaw] = await Promise.all([
+          fetchPage(API.get.payouts, page, size),
+          fetchPage(API.get.transactions, page, size)
+        ]);
+
+        const payouts = extractContent(payoutsRaw);
+        const txs = extractContent(txRaw);
+
+        payoutsEl.textContent = renderJson(payouts);
+        txEl.textContent = renderJson(txs);
+
+        const totalPages = Math.max(totalPagesOf(payoutsRaw), totalPagesOf(txRaw));
+        document.getElementById('prevBtn').disabled = page <= 0;
+        document.getElementById('nextBtn').disabled = (page + 1) >= totalPages;
+
+        infoEl.textContent = `Page ${page + 1} of ${totalPages} | ` +
+          `Payouts total: ${totalElementsOf(payoutsRaw)} | ` +
+          `Transactions total: ${totalElementsOf(txRaw)}`;
+
+      } catch (e) {
+        payoutsEl.textContent = 'Error: ' + e.message;
+        txEl.textContent = 'Error: ' + e.message;
+        document.getElementById('prevBtn').disabled = true;
+        document.getElementById('nextBtn').disabled = true;
+      }
+    }
+
+    document.getElementById('loadBtn').onclick = () => { page = 0; load(); };
+    document.getElementById('prevBtn').onclick = () => { if (page > 0) { page--; load(); } };
+    document.getElementById('nextBtn').onclick = () => { page++; load(); };
+</script>
+
 </body>
 </html>
