@@ -8,10 +8,10 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Table(name = "transactions")
+@RequiredArgsConstructor
 @Entity
+@Table(name = "transactions",
+        uniqueConstraints = @UniqueConstraint(name = "uk_transactions_txn_id", columnNames = "transactionId"))
 public class Transaction {
 
     @Id
