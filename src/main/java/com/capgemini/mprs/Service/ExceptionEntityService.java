@@ -34,4 +34,8 @@ public class ExceptionEntityService {
     public List<ExceptionEntity> findPayoutExceptions() {
         return repository.findPayoutExceptions();
     }
+
+    public void saveAll(List<ExceptionEntity> exceptions) {
+        repository.saveAll(exceptions);
+    }
 }

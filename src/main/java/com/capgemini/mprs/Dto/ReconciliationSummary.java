@@ -17,5 +17,4 @@ public class ReconciliationSummary {
     private Long transaction_id;
     private BigDecimal payout;
     private BigDecimal expectedPayout;
-    private boolean exception;
 }

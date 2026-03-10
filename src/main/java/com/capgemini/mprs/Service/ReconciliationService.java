@@ -1,5 +1,7 @@
 package com.capgemini.mprs.Service;
 
+import com.capgemini.mprs.Dto.ProcessingResult;
+import com.capgemini.mprs.Entity.ExceptionEntity;
 import com.capgemini.mprs.Entity.Reconciliation;
 import com.capgemini.mprs.Repository.ReconciliationRepository;
 import com.capgemini.mprs.Repository.PayoutRepository;
@@ -12,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ReconciliationService {
@@ -32,47 +36,61 @@ public class ReconciliationService {
         reconciliationRepository.save(reconciliation);
     }
 
-    public ReconciliationSummary processReconciliation(Transaction transaction, Long jobId) {
+    public ProcessingResult processReconciliation(Transaction transaction, Long jobId) {
+        ProcessingResult r = new ProcessingResult();
         if(payoutRepository.findById(transaction.getTransaction_id()).isEmpty()){
-            exceptionEntityService.createException(404, "Job Not Found", "No Payout for transaction id: " + transaction.getTransaction_id(), "/api/v1/reconciliations/" + jobId);
-            return new ReconciliationSummary(transaction.getTransaction_id(), BigDecimal.ZERO, BigDecimal.ZERO, true); }
+            r.setError(new ExceptionEntity(404, "Not Found", "No Payout for transaction id: " + transaction.getTransaction_id(), "/api/v1/reconciliations/" + jobId));
+            return r;
+        }
         BigDecimal payoutAmount = payoutRepository.findById(transaction.getTransaction_id()).get().getPayout_amount();
 
         BigDecimal estimatePayout = transaction.getAmount().subtract
                         (((transaction.getAmount().multiply(BigDecimal.valueOf(.025))).add(BigDecimal.valueOf(.30))))
                 .setScale(2, RoundingMode.HALF_UP);
-        boolean isException = false;
+
+        r.setSummary(new ReconciliationSummary(transaction.getTransaction_id(), payoutAmount, estimatePayout));
+
         BigDecimal difference = (payoutAmount.subtract(estimatePayout)).setScale(2, RoundingMode.HALF_UP).abs();
         if (estimatePayout.compareTo(payoutAmount) > 0) {
-            isException = true;
-            exceptionEntityService.createException(400, "Invalid Field", "Underpaid by $" + difference, "/api/v1/reconciliations/" + jobId);
+            r.setError(new ExceptionEntity(400, "Difference",  "Underpaid by $" + difference, "/api/v1/reconciliations/" + jobId));
         }
         else if (estimatePayout.compareTo(payoutAmount) < 0) {
-            isException = true;
-            exceptionEntityService.createException(400, "Invalid Field", "Overpaid by $" + difference, "/api/v1/reconciliations/" + jobId);
+            r.setError(new ExceptionEntity(400, "Difference",  "Overpaid by $" + difference, "/api/v1/reconciliations/" + jobId));
         }
-        return new ReconciliationSummary(transaction.getTransaction_id(), payoutAmount, estimatePayout, isException);
+        return r;
     }
 
     public Reconciliation getReconciliationById(Long jobId) {
         return reconciliationRepository.findById(jobId).orElse(null);
     }
 
-    public void updateSummary(Reconciliation r, Chunk<? extends ReconciliationSummary> items) {
-        for (ReconciliationSummary item : items) {
+    public void updateSummary(Reconciliation r, Chunk<? extends ProcessingResult> items) {
+        List<ExceptionEntity> exceptions = new ArrayList<>();
+        for (ProcessingResult item : items) {
             r.setTotalEligibleTransactions(r.getTotalEligibleTransactions() + 1);
-            r.setTotalPaid(r.getTotalPaid().add(item.getPayout()));
-            r.setTotalExpectedPayout(r.getTotalExpectedPayout().add(item.getExpectedPayout()));
+            r.setTotalPaid(r.getTotalPaid().add(item.getSummary().getPayout()));
+            r.setTotalExpectedPayout(r.getTotalExpectedPayout().add(item.getSummary().getExpectedPayout()));
             r.setTotalVariance(r.getTotalPaid().subtract(r.getTotalExpectedPayout()).abs());
-            if (item.isException()) {
+            if (item.isError()) {
                 r.setTotalExceptions(r.getTotalExceptions() + 1);
+                exceptions.add(item.getError());
             }
+        }
+        if(!exceptions.isEmpty())
+        {
+            exceptionEntityService.saveAll(exceptions);
         }
         reconciliationRepository.save(r);
     }
+
+
     @Transactional
     public void setStatus(Long id, String status) {
         reconciliationRepository.findById(id).ifPresent(r -> r.setStatus(status));
+    }
+
+    public void save(Reconciliation r) {
+        reconciliationRepository.save(r);
     }
 }
 

@@ -1,5 +1,6 @@
 package com.capgemini.mprs.Service;
 
+import com.capgemini.mprs.Dto.ProcessingResult;
 import com.capgemini.mprs.Entity.ExceptionEntity;
 import com.capgemini.mprs.Entity.Payout;
 import com.capgemini.mprs.Repository.PayoutRepository;
@@ -36,14 +37,25 @@ public class PayoutService {
         return repository.findAll(pageRequest).getContent();
     }
 
-    public Payout ingestPayout(String s)
+    public ProcessingResult ingestPayout(String s)
     {
-        String[] parts = s.split(",");
-        Long id = Long.parseLong(parts[0]);
-        BigDecimal payout_amount = new BigDecimal(parts[1]);
-       // DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-        LocalDate merchant_id = LocalDate.parse(parts[2]);
-        return new Payout(id, payout_amount, merchant_id);
+        ProcessingResult r = new ProcessingResult();
+        try {
+            String[] parts = s.split(",");
+            Long id = Long.parseLong(parts[0]);
+            BigDecimal payout_amount = new BigDecimal(parts[1]);
+            if(payout_amount.compareTo(BigDecimal.valueOf(0.00)) < 0)
+            {
+                throw new Exception("Amount cannot be negative");
+            }
+            // DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+            LocalDate merchant_id = LocalDate.parse(parts[2]);
+            r.setPayout(new Payout(id, payout_amount, merchant_id));
+        }
+        catch(Exception e) {
+            r.setError(new ExceptionEntity(400, "Bad Request for payout: " + s, e.getMessage(), "/api/v1/payouts/bulk"));
+        }
+        return r;
     }
 
     public Long getCount() {

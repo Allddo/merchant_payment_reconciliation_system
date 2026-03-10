@@ -1,5 +1,6 @@
 package com.capgemini.mprs.Service;
 
+import com.capgemini.mprs.Dto.ProcessingResult;
 import com.capgemini.mprs.Entity.ExceptionEntity;
 import com.capgemini.mprs.Entity.Transaction;
 import com.capgemini.mprs.Repository.PayoutRepository;
@@ -40,18 +41,32 @@ public class TransactionService {
         return repository.findAll(pageRequest).getContent();
     }
 
-    public Transaction ingestTransaction(String s)
+    public ProcessingResult ingestTransaction(String s)
     {
-        String[] parts = s.split(",");
-        Long id = Long.parseLong(parts[0]);
-        BigDecimal amount = new BigDecimal(parts[1]);
-        String status = parts[2];
+        ProcessingResult r = new ProcessingResult();
+        try{
+            String[] parts = s.split(",");
+            Long id = Long.parseLong(parts[0]);
+            BigDecimal amount = new BigDecimal(parts[1]);
+            if(amount.compareTo(BigDecimal.valueOf(0.00)) < 0)
+            {
+                throw new Exception("Amount cannot be negative");
+            }
+            String status = parts[2];
+            if(!(status.equals("AUTHORIZED") || status.equals("CHARGEBACK") || status.equals("REFUNDED") || status.equals("SETTLED")))
+            {
+                throw new Exception("Invalid status");
+            }
+            // DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+            LocalDate date = LocalDate.parse(parts[3]);
 
-       // DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-        LocalDate date = LocalDate.parse(parts[3]);
-
-        Integer merchantId = Integer.parseInt(parts[4]);
-        return new Transaction(id, amount, status, date, merchantId);
+            Integer merchantId = Integer.parseInt(parts[4]);
+            r.setTransaction(new Transaction(id, amount, status, date, merchantId));
+        }
+        catch (Exception e){
+            r.setError(new ExceptionEntity(400, "Bad Request for transaction: " + s, e.getMessage(), "/api/v1/transactions/bulk"));
+        }
+        return r;
     }
 
     public Long getCount() {

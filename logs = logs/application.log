@@ -1,0 +1,144 @@
+2026-03-09T16:17:38.101-05:00  INFO 35128 --- [mprs] [main] com.capgemini.mprs.MprsApplication       : Starting MprsApplication using Java 21.0.4 with PID 35128 (C:\Users\nashin\IdeaProjects\merchant_payment_reconciliation_system\build\classes\java\main started by nashin in C:\Users\nashin\IdeaProjects\merchant_payment_reconciliation_system)
+2026-03-09T16:17:38.131-05:00  INFO 35128 --- [mprs] [main] com.capgemini.mprs.MprsApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-03-09T16:17:41.673-05:00  INFO 35128 --- [mprs] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-03-09T16:17:41.673-05:00  INFO 35128 --- [mprs] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.15]
+2026-03-09T16:17:43.513-05:00  INFO 35128 --- [mprs] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-03-09T16:17:44.127-05:00  INFO 35128 --- [mprs] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@35260785
+2026-03-09T16:17:44.130-05:00  INFO 35128 --- [mprs] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-03-09T16:17:49.575-05:00  INFO 35128 --- [mprs] [main] com.capgemini.mprs.MprsApplication       : Started MprsApplication in 12.441 seconds (process running for 13.914)
+2026-03-09T16:18:06.828-05:00  INFO 35128 --- [mprs] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-03-09T16:18:06.920-05:00  INFO 35128 --- [mprs] [http-nio-8080-exec-1] c.c.mprs.Filter.RequestLoggingFilter     : Endpoint accessed: GET /swagger-ui/index.html
+2026-03-09T16:18:07.156-05:00  INFO 35128 --- [mprs] [http-nio-8080-exec-2] c.c.mprs.Filter.RequestLoggingFilter     : Endpoint accessed: GET /swagger-ui/swagger-ui.css
+2026-03-09T16:18:07.230-05:00  INFO 35128 --- [mprs] [http-nio-8080-exec-4] c.c.mprs.Filter.RequestLoggingFilter     : Endpoint accessed: GET /swagger-ui/swagger-ui-bundle.js
+2026-03-09T16:18:07.230-05:00  INFO 35128 --- [mprs] [http-nio-8080-exec-3] c.c.mprs.Filter.RequestLoggingFilter     : Endpoint accessed: GET /swagger-ui/index.css
+2026-03-09T16:18:07.239-05:00  INFO 35128 --- [mprs] [http-nio-8080-exec-6] c.c.mprs.Filter.RequestLoggingFilter     : Endpoint accessed: GET /swagger-ui/swagger-initializer.js
+2026-03-09T16:18:07.239-05:00  INFO 35128 --- [mprs] [http-nio-8080-exec-5] c.c.mprs.Filter.RequestLoggingFilter     : Endpoint accessed: GET /swagger-ui/swagger-ui-standalone-preset.js
+2026-03-09T16:18:07.569-05:00  INFO 35128 --- [mprs] [http-nio-8080-exec-7] c.c.mprs.Filter.RequestLoggingFilter     : Endpoint accessed: GET /v3/api-docs/swagger-config
+2026-03-09T16:18:07.722-05:00  INFO 35128 --- [mprs] [http-nio-8080-exec-8] c.c.mprs.Filter.RequestLoggingFilter     : Endpoint accessed: GET /v3/api-docs
+2026-03-09T16:18:08.533-05:00  INFO 35128 --- [mprs] [http-nio-8080-exec-8] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 783 ms
+2026-03-09T16:18:23.870-05:00  INFO 35128 --- [mprs] [http-nio-8080-exec-9] c.c.mprs.Filter.RequestLoggingFilter     : Endpoint accessed: POST /auth/login
+2026-03-09T16:18:42.201-05:00  INFO 35128 --- [mprs] [http-nio-8080-exec-10] c.c.mprs.Filter.RequestLoggingFilter     : Endpoint accessed: GET /api/v1/transactions/exceptions
+2026-03-09T16:18:53.472-05:00  INFO 35128 --- [mprs] [http-nio-8080-exec-1] c.c.mprs.Filter.RequestLoggingFilter     : Endpoint accessed: GET /api/v1/transactions/
+2026-03-09T16:23:11.852-05:00  INFO 35128 --- [mprs] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-03-09T16:23:11.870-05:00  INFO 35128 --- [mprs] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-03-09T16:40:01.977-05:00  INFO 4864 --- [mprs] [main] com.capgemini.mprs.MprsApplication       : Starting MprsApplication using Java 21.0.4 with PID 4864 (C:\Users\nashin\IdeaProjects\merchant_payment_reconciliation_system\build\classes\java\main started by nashin in C:\Users\nashin\IdeaProjects\merchant_payment_reconciliation_system)
+2026-03-09T16:40:01.984-05:00  INFO 4864 --- [mprs] [main] com.capgemini.mprs.MprsApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-03-09T16:40:05.104-05:00  INFO 4864 --- [mprs] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-03-09T16:40:05.104-05:00  INFO 4864 --- [mprs] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.15]
+2026-03-09T16:40:07.003-05:00  INFO 4864 --- [mprs] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-03-09T16:40:07.413-05:00  INFO 4864 --- [mprs] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@177068db
+2026-03-09T16:40:07.413-05:00  INFO 4864 --- [mprs] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-03-09T16:46:22.860-05:00  INFO 37036 --- [mprs] [Test worker] com.capgemini.mprs.ControllerTests       : Starting ControllerTests using Java 17.0.11 with PID 37036 (started by nashin in C:\Users\nashin\IdeaProjects\merchant_payment_reconciliation_system)
+2026-03-09T16:46:22.872-05:00  INFO 37036 --- [mprs] [Test worker] com.capgemini.mprs.ControllerTests       : No active profile set, falling back to 1 default profile: "default"
+2026-03-09T16:46:25.796-05:00 ERROR 37036 --- [mprs] [Test worker] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field repository in com.capgemini.mprs.Controller.GlobalExceptionHandler required a bean of type 'com.capgemini.mprs.Repository.ExceptionEntityRepository' that could not be found.
+
+The injection point has the following annotations:
+	- @org.springframework.beans.factory.annotation.Autowired(required=true)
+
+
+Action:
+
+Consider defining a bean of type 'com.capgemini.mprs.Repository.ExceptionEntityRepository' in your configuration.
+
+2026-03-09T16:49:51.252-05:00  INFO 32308 --- [mprs] [Test worker] com.capgemini.mprs.ControllerTests       : Starting ControllerTests using Java 17.0.11 with PID 32308 (started by nashin in C:\Users\nashin\IdeaProjects\merchant_payment_reconciliation_system)
+2026-03-09T16:49:51.255-05:00  INFO 32308 --- [mprs] [Test worker] com.capgemini.mprs.ControllerTests       : No active profile set, falling back to 1 default profile: "default"
+2026-03-09T16:49:54.104-05:00 ERROR 32308 --- [mprs] [Test worker] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field repository in com.capgemini.mprs.Controller.GlobalExceptionHandler required a bean of type 'com.capgemini.mprs.Repository.ExceptionEntityRepository' that could not be found.
+
+The injection point has the following annotations:
+	- @org.springframework.beans.factory.annotation.Autowired(required=true)
+
+
+Action:
+
+Consider defining a bean of type 'com.capgemini.mprs.Repository.ExceptionEntityRepository' in your configuration.
+
+2026-03-09T16:59:47.176-05:00  INFO 27808 --- [mprs] [Test worker] com.capgemini.mprs.ControllerTests       : Starting ControllerTests using Java 17.0.11 with PID 27808 (started by nashin in C:\Users\nashin\IdeaProjects\merchant_payment_reconciliation_system)
+2026-03-09T16:59:47.184-05:00  INFO 27808 --- [mprs] [Test worker] com.capgemini.mprs.ControllerTests       : No active profile set, falling back to 1 default profile: "default"
+2026-03-09T16:59:49.911-05:00 ERROR 27808 --- [mprs] [Test worker] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field repository in com.capgemini.mprs.Controller.GlobalExceptionHandler required a bean of type 'com.capgemini.mprs.Repository.ExceptionEntityRepository' that could not be found.
+
+The injection point has the following annotations:
+	- @org.springframework.beans.factory.annotation.Autowired(required=true)
+
+
+Action:
+
+Consider defining a bean of type 'com.capgemini.mprs.Repository.ExceptionEntityRepository' in your configuration.
+
+2026-03-09T17:09:11.744-05:00  INFO 31384 --- [mprs] [main] com.capgemini.mprs.MprsApplication       : Starting MprsApplication using Java 21.0.4 with PID 31384 (C:\Users\nashin\IdeaProjects\merchant_payment_reconciliation_system\build\classes\java\main started by nashin in C:\Users\nashin\IdeaProjects\merchant_payment_reconciliation_system)
+2026-03-09T17:09:11.755-05:00  INFO 31384 --- [mprs] [main] com.capgemini.mprs.MprsApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-03-09T17:09:14.729-05:00  INFO 31384 --- [mprs] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-03-09T17:09:14.731-05:00  INFO 31384 --- [mprs] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.15]
+2026-03-09T17:09:16.427-05:00  INFO 31384 --- [mprs] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-03-09T17:09:16.779-05:00  INFO 31384 --- [mprs] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@60f3239f
+2026-03-09T17:09:16.781-05:00  INFO 31384 --- [mprs] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-03-09T17:09:22.068-05:00  INFO 31384 --- [mprs] [main] com.capgemini.mprs.MprsApplication       : Started MprsApplication in 11.081 seconds (process running for 12.283)
+2026-03-09T17:09:25.122-05:00  INFO 31384 --- [mprs] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-03-09T17:09:25.128-05:00  INFO 31384 --- [mprs] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-03-09T17:17:20.374-05:00  INFO 37416 --- [mprs] [main] com.capgemini.mprs.MprsApplication       : Starting MprsApplication using Java 17.0.11 with PID 37416 (C:\Users\nashin\IdeaProjects\merchant_payment_reconciliation_system\build\classes\java\main started by nashin in C:\Users\nashin\IdeaProjects\merchant_payment_reconciliation_system)
+2026-03-09T17:17:20.377-05:00  INFO 37416 --- [mprs] [main] com.capgemini.mprs.MprsApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-03-09T17:17:24.083-05:00  INFO 37416 --- [mprs] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-03-09T17:17:24.083-05:00  INFO 37416 --- [mprs] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.15]
+2026-03-09T17:17:26.877-05:00  INFO 37416 --- [mprs] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-03-09T17:17:27.358-05:00  INFO 37416 --- [mprs] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@625db0e0
+2026-03-09T17:17:27.362-05:00  INFO 37416 --- [mprs] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-03-09T17:17:33.146-05:00  INFO 37416 --- [mprs] [main] com.capgemini.mprs.MprsApplication       : Started MprsApplication in 13.72 seconds (process running for 15.138)
+2026-03-09T17:17:35.262-05:00  INFO 37416 --- [mprs] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-03-09T17:17:35.266-05:00  INFO 37416 --- [mprs] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-03-09T17:17:51.703-05:00  INFO 35476 --- [mprs] [Test worker] com.capgemini.mprs.ControllerTests       : Starting ControllerTests using Java 17.0.11 with PID 35476 (started by nashin in C:\Users\nashin\IdeaProjects\merchant_payment_reconciliation_system)
+2026-03-09T17:17:51.709-05:00  INFO 35476 --- [mprs] [Test worker] com.capgemini.mprs.ControllerTests       : No active profile set, falling back to 1 default profile: "default"
+2026-03-09T17:17:54.937-05:00 ERROR 35476 --- [mprs] [Test worker] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 1 of constructor in com.capgemini.mprs.Controller.TransactionController required a bean of type 'org.springframework.batch.core.launch.JobLauncher' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'org.springframework.batch.core.launch.JobLauncher' in your configuration.
+
+2026-03-09T17:21:48.123-05:00  INFO 32640 --- [mprs] [Test worker] com.capgemini.mprs.ControllerTests       : Starting ControllerTests using Java 17.0.11 with PID 32640 (started by nashin in C:\Users\nashin\IdeaProjects\merchant_payment_reconciliation_system)
+2026-03-09T17:21:48.136-05:00  INFO 32640 --- [mprs] [Test worker] com.capgemini.mprs.ControllerTests       : No active profile set, falling back to 1 default profile: "default"
+2026-03-09T17:21:51.400-05:00 ERROR 32640 --- [mprs] [Test worker] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 1 of constructor in com.capgemini.mprs.Controller.TransactionController required a bean of type 'org.springframework.batch.core.launch.JobLauncher' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'org.springframework.batch.core.launch.JobLauncher' in your configuration.
+
