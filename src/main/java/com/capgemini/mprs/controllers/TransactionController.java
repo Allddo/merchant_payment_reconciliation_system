@@ -154,17 +154,11 @@ public class TransactionController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Transaction> getTransactionById(@PathVariable String id){
+    public ResponseEntity<Transaction> getTransactionById(@PathVariable String id){
 
-        Optional<Transaction> t = transactionService.findTransactionById(id);
-        try {
-            if(t.isEmpty()){
-                throw new TransactionNotFoundException("Transaction Not Found For Given Id.");
-            }
-            return t;
-        }catch (IllegalArgumentException e){
-            throw new IllegalArgumentException();
-        }
+        return transactionService.findTransactionById(id)
+                .map(ResponseEntity::ok)
+                .orElseThrow(() -> new TransactionNotFoundException("Transaction Not Foudn For Given Id."));
     }
 
 }

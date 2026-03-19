@@ -27,6 +27,14 @@ dependencies {
     implementation 'org.postgresql:postgresql:42.7.7'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
+    testImplementation 'org.springframework.boot:spring-boot-test-autoconfigure'
+
+    testImplementation 'au.com.dius.pact.provider:junit5spring:4.6.15'
+    testImplementation 'au.com.dius.pact.provider:spring:4.6.15'
+    testImplementation 'au.com.dius.pact.provider:junit5:4.6.15'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testCompileOnly 'org.projectlombok:lombok'
