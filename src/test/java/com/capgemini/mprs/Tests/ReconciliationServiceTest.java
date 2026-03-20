@@ -1,4 +1,4 @@
-package com.capgemini.mprs;
+package com.capgemini.mprs.Tests;
 
 import com.capgemini.mprs.dtos.JobDto;
 import com.capgemini.mprs.dtos.RunRequestDto;
@@ -18,11 +18,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
+import org.springframework.aop.framework.Advised;
+import org.springframework.aop.target.SingletonTargetSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.util.AopTestUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -298,4 +301,27 @@ class ReconciliationServiceTest {
         verify(exceptionRepo, times(1)).findAll();
         verifyNoMoreInteractions(exceptionRepo);
     }
+
+    @Test
+    void triggerAsync_shouldCallRun() throws Exception {
+        RunRequestDto req = new RunRequestDto();
+
+        // 1. Extract the real target object from Spring’s proxy
+        ReconciliationService target = AopTestUtils.getTargetObject(reconciliationService);
+
+        // 2. Create a spy of the target
+        ReconciliationService spy = spy(target);
+
+        // 3. Replace the target inside the proxy
+        Advised advised = (Advised) reconciliationService;
+        advised.setTargetSource(new SingletonTargetSource(spy));
+
+        // 4. Trigger async method
+        reconciliationService.triggerAsync(req);
+
+        // 5. Verify that run() was called asynchronously
+        verify(spy, timeout(1500)).run(req);
+    }
+
+
 }

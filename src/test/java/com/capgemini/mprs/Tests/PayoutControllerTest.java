@@ -1,4 +1,4 @@
-package com.capgemini.mprs;
+package com.capgemini.mprs.Tests;
 
 import com.capgemini.mprs.controllers.PayoutController;
 import com.capgemini.mprs.entities.Payout;

@@ -1,4 +1,4 @@
-package com.capgemini.mprs;
+package com.capgemini.mprs.Tests;
 
 import com.capgemini.mprs.dtos.RunRequestDto;
 import com.capgemini.mprs.entities.ReconciliationException;

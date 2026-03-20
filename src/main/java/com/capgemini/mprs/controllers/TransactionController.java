@@ -158,7 +158,7 @@ public class TransactionController {
 
         return transactionService.findTransactionById(id)
                 .map(ResponseEntity::ok)
-                .orElseThrow(() -> new TransactionNotFoundException("Transaction Not Foudn For Given Id."));
+                .orElseThrow(() -> new TransactionNotFoundException("Transaction Not Found For Given Id."));
     }
 
 }

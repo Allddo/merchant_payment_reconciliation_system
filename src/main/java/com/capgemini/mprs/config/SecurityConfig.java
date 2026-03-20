@@ -46,7 +46,7 @@ public class SecurityConfig {
                         })
                 )
 
-                // RBAC rules from your PDF
+                // RBAC rules from PDF
                 .authorizeHttpRequests(auth -> auth
 
                         // ✅ Allow CORS preflight requests

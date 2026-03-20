@@ -1,4 +1,4 @@
-package com.capgemini.mprs;
+package com.capgemini.mprs.Tests;
 
 import com.capgemini.mprs.entities.Payout;
 import com.capgemini.mprs.repositories.PayoutRepository;
@@ -10,7 +10,6 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
